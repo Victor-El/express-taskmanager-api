@@ -17,6 +17,7 @@ var registerRouter = require('./routes/register.router');
 var loginRouter = require('./routes/login.router');
 
 const loginValidator = require('./validators/login.validator');
+const registerValidator = require('./validators/register.validator');
 
 var app = express();
 
@@ -34,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/register', registerRouter);
+app.use('/register', registerValidator ,registerRouter);
 app.use("/login", loginValidator, loginRouter);
 
 // catch 404 and forward to error handler
