@@ -36,14 +36,14 @@ function RegisterService() {
 function LoginService() {
     this.login = function(data, callback) {
         const username = data.username;
-        const email = data.password;
+        const email = data.email;
         const password = data.password;
 
         if (!(username || email)) {
             callback("must login with either username or password", null);
         } else {
             if (username) {
-                user = User.findOne({username}, (err, doc) => {
+                User.findOne({username}, (err, doc) => {
                     if (!err) {
                         bcrypt.compare(password, doc.password, (err, same) => {
                             if (!err) {
@@ -62,7 +62,25 @@ function LoginService() {
                     }
                 });
             } else {
-                user = User.findOne({email}, (err, doc) => {});
+                User.findOne({email}, (err, doc) => {
+                    console.log(doc);
+                    if (!err) {
+                        bcrypt.compare(password, doc.password, (err, same) => {
+                            if (!err) {
+                                if (same) {
+                                    console.log("Logged in user", doc);
+                                    callback(null, doc);
+                                } else {
+                                    callback("username or email and password didn't match", null);
+                                }
+                            } else {
+                                callback(err, null);
+                            }
+                        });
+                    } else {
+                        callback(err, null);
+                    }
+                });
             }
             
             

@@ -21,7 +21,7 @@ router.post("/", (req, res, next) => {
             lastname
         }, (err, user) => {
             if (!err) {
-                delete user.password;
+               // delete user.password;
                 res.json({
                     status: "success",
                     message: "User created",
