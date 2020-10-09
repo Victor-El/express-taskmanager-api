@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const { loginService } = require('../services/auth.service');
 
+const { JWT_PRIVATE_KEY } = require("../constants");
+
 
 router.post("/", (req, res, next) => {
 
@@ -22,7 +24,7 @@ router.post("/", (req, res, next) => {
                     res.json({
                         status: "success",
                         message: "signed in successfully",
-                        token: jwt.sign({id: doc._id}, process.env.JWT_PRIVATE_KEY, {expiresIn: 7 * 24 * 60 * 60}),
+                        token: jwt.sign({id: doc._id}, JWT_PRIVATE_KEY, {expiresIn: 7 * 24 * 60 * 60}),
                         doc
                     });
                 } else {
@@ -38,7 +40,7 @@ router.post("/", (req, res, next) => {
                     res.json({
                         status: "success",
                         message: "signed in successfully",
-                        token: jwt.sign({id: doc._id}, process.env.JWT_PRIVATE_KEY, {expiresIn: 7 * 24 * 60 * 60}),
+                        token: jwt.sign({id: doc._id}, JWT_PRIVATE_KEY, {expiresIn: 7 * 24 * 60 * 60}),
                         doc
                     });
                 } else {

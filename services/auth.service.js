@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/schema');
 
+const { BCRYPT_ROUNDS } = require("../constants");
+
 
 function RegisterService() {
     this.register = async function(data, callback) {
@@ -10,7 +12,7 @@ function RegisterService() {
 
         const username = data.username;
         const email = data.email;
-        const password = await bcrypt.hash(data.password, 10);
+        const password = await bcrypt.hash(data.password, BCRYPT_ROUNDS);
         const firstname = data.firstname;
         const lastname = data.lastname;
 
