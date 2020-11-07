@@ -4,11 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// env vars
-const { MONGO_URL } = require('./constants');
-
 // config env vars
 require('dotenv').config();
+
+// env vars
+const { MONGO_URL } = require('./constants');
 
 // start mongo and connect
 const mongoose = require('mongoose');
@@ -21,6 +21,7 @@ var loginRouter = require('./routes/login.router');
 
 const loginValidator = require('./validators/login.validator');
 const registerValidator = require('./validators/register.validator');
+const jwtValidator = require("./validators/jwt.validator");
 
 var app = express();
 
@@ -36,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // validators
 
-app.use('/', indexRouter);
+app.use('/', jwtValidator, indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerValidator ,registerRouter);
 app.use("/login", loginValidator, loginRouter);
